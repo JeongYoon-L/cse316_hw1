@@ -84,7 +84,7 @@ export default class ToDoModel {
      * 
      * @param {*} initName The name of this to add.
      */
-    addNewList(initName) {
+    addNewList(initName) { //한글 새로운 사이드 리스트 추가시 일로옴 
         let newList = new ToDoList(this.nextListId++);
         if (initName)
             newList.setName(initName);
@@ -126,11 +126,25 @@ export default class ToDoModel {
         }
         if (listIndex >= 0) {
             let listToLoad = this.toDoLists[listIndex];
+
+            //한글 문제3
+            for (let i = 0; i < this.toDoLists[0].items.length; i++) {
+                if(document.getElementById("updateDate-"+this.toDoLists[0].items[i].id) != null){
+                var text = document.getElementById("updateDate-"+this.toDoLists[0].items[i].id).value;
+                this.toDoLists[0].items[i].dueDate = text;
+                this.toDoLists[0].items[i].description = document.getElementById("updateDescription-"+this.toDoLists[0].items[i].id).innerHTML;
+                }    
+            }
+
+            //한글 문제1
+            this.toDoLists[listIndex] = this.toDoLists[0];
+            this.toDoLists[0]= listToLoad
+            this.view.refreshLists(this.toDoLists);
+
             this.currentList = listToLoad;
             this.view.viewList(this.currentList);
         }
     }
-
     /**
      * Redo the current transaction if there is one.
      */
@@ -151,14 +165,14 @@ export default class ToDoModel {
     /**
      * Finds and then removes the current list.
      */
-    removeCurrentList() {
+    removeCurrentList() { //한글 side list 지우는거 (지우는 버튼이랑 연결되어있음 )
         let indexOfList = -1;
         for (let i = 0; (i < this.toDoLists.length) && (indexOfList < 0); i++) {
             if (this.toDoLists[i].id === this.currentList.id) {
                 indexOfList = i;
             }
         }
-        this.toDoLists.splice(indexOfList, 1);
+        this.toDoLists.splice(indexOfList, 1); //한글 지금 클릭중인 인덱스 하나를 제거하기
         this.currentList = null;
         this.view.clearItemsList();
         this.view.refreshLists(this.toDoLists);

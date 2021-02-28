@@ -57,14 +57,23 @@ export default class ToDoView {
 
         // GET RID OF ALL THE ITEMS
         this.clearItemsList();
-
         for (let i = 0; i < list.items.length; i++) {
             // NOW BUILD ALL THE LIST ITEMS
             let listItem = list.items[i];
             let listItemElement = "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
-                                + "<div class='task-col'>" + listItem.description + "</div>"
-                                + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
-                                + "<div class='status-col'>" + listItem.status + "</div>"
+                                + "<div class='task-col' id = 'updateDescription-" + listItem.id + "' contentEditable='true' >" + listItem.description + "</div>"
+                                + "<div class='due-date-col'>"
+                                +"<input type='date' style='border:none' id='updateDate-" + listItem.id +"' name='trip-start' value= " + listItem.dueDate + " min='2010-01-01' max='2050-12-31'>"
+                                + "</div>"
+
+                                + "<div class='status-col' id='updateStatus-" + listItem.id + "' >" 
+                                + "<button onclick='dropdown()' class='button'>"+listItem.status+"</button> "
+                                +"<div style='display: none;' id='drop-content'>"
+                                +    "<a hreaf='#'>Complete</a>"
+                                +    "<a hreaf='#'>Incomplete</a>"
+                                +"</div>"                                
+                                +"</div>"
+
                                 + "<div class='list-controls-col'>"
                                 + " <div class='list-item-control material-icons'>keyboard_arrow_up</div>"
                                 + " <div class='list-item-control material-icons'>keyboard_arrow_down</div>"
