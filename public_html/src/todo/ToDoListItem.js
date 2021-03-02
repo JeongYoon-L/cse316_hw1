@@ -48,4 +48,8 @@ export default class ToDoListItem {
     setStatus(initStatus) {
         this.status = initStatus;
     }
+
+    setID(initID){
+        this.id = initID;
+    }
 }

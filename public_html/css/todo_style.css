@@ -69,3 +69,7 @@
 .todo_button:hover {
     background-color: var(--swatch-contrast);
 }
+
+#add-list-button{
+    color : #ffc800;
+}

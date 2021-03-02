@@ -16,6 +16,7 @@
 #left-sidebar {
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
+    overflow : auto;
 }
 
 #left-sidebar-header {
@@ -36,6 +37,7 @@
     grid-row: 2 span 1;
     /*display: flex;*/
     flex-direction: column;
+    overflow : auto;
 }
 
 #todo-list-items-div{
@@ -76,7 +78,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 /* Set a style for all buttons */
 button {
-  background-color: #636363;
+  background-color: #40454e;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -176,38 +178,30 @@ input{
   background-color: #40454e;
   font-family: 'Lexend Exa', sans-serif;
 }
-#drop-content{
-  position: absolute;
+
+select{
+  background-color: #40454e;
+  font-family: 'Lexend Exa', sans-serif;
   z-index: 1;
-}
-#drop-content a{
-  display:block;
-  font-size: 20px;
-  background-color: #dfdfdf;
-  color: black;
-  text-decoration: none;
-  padding: 10px 36px;
-  margin: 2px 0px 0px 0px;
-}
-
-.status-col {
-  position: relative;
-  display: inline-block;
+  text-align-last: center;
+  text-align: center;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+#status-col {
   z-index: 1;
 }
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+#undo-button{
+  pointer-events : auto;
+}
+#redo-button{
+  pointer-events : auto;
 }
