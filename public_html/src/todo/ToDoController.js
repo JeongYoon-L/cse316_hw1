@@ -128,10 +128,29 @@ export default class ToDoController {
 
     }
     
+
     // PROVIDES THE RESPONSE TO WHEN A USER CLICKS ON A LIST TO LOAD
     handleLoadList(listId) {
         // UNLOAD THE CURRENT LIST AND INSTEAD LOAD THE CURRENT LIST
-        this.model.loadList(listId);
+        //this.model.loadList(listId);
+        let self = this;
+        if(this.model.toDoLists[0].id == listId && document.getElementById('todo-list-'+ listId ).style.color == "black"){
+            this.model.loadList(listId);
+            document.getElementById('todo-list-'+ listId).style.backgroundColor = "#ffc800";
+            document.getElementById('todo-list-'+ listId ).style.color = "black";
+
+            document.getElementById('todo-list-'+listId).contentEditable = true;
+            document.getElementById("todo-list-"+ listId).addEventListener('blur' , function(){
+                
+                self.model.toDoLists[0].name =document.getElementById("todo-list-"+ listId).innerHTML;                
+            });
+
+        }
+        else{
+            document.getElementById('todo-list-'+self.model.toDoLists[0].id).contentEditable = false;
+            self.model.toDoLists[0].name =document.getElementById("todo-list-"+ self.model.toDoLists[0].id).innerHTML;                
+            this.model.loadList(listId);
+        }
     }
 
     can(){
