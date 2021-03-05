@@ -13,8 +13,54 @@
     --swatch-text:          #e9edf0; /* USED IN MOUSE-OVER SELECTION OF TEXT AND BORDERS */ 
     --swatch-text-accent:   #ffc819; /* USED IN MOUSE-OVER SELECTION OF TEXT AND BORDERS */  
 
-    --font-primary:         'Lexend Exa', sans-serif;
+    --font-primary:         'Consolas';
+    --warm-white: #f9f7f1;
+    --warm-white-transparent: #f9f7f111;
+    --warmer-white: #f9f7dd;
+    --blue-slate: #2c3437;
+    --light-green: #99cc7d;
+    --lighter-green: #bdfc9b;
+    --light-orange: #f5bc75;
+    --light-blue: #8ed4f8;
+    --light-purple: #dbbdf9;
+    --light-pink: #fbb4d2;
+    --light-yellow: #e6db74;
+    --light-beige: #d9d6cc;
+    --light-gray: #e9edf0;
+    --bright-orange: #fca234;
+    --yellow-orange: #ffc800;
+    --hover-light: rgba(255,255,255, 0.7);
+    --deep-blue: rgb(64, 69, 78);
+    --deep-blue-lighter: rgb(87, 93, 105);
+    /* --deep-blue: #282c34; */
+    --button-transparent: rgba(255,255,255, 0);
+    --deep-blue-darker: #353a44;
+    /* --deep-blue-darker: #282c34; */
+    --blue-gray: #7e8084;
+    --darkblue-gray: #2b2e36;
+    --warm-black: #322d2d;
+    --drop-shadow: 2px 3px 2px #636363;
+    --drop-shadow-sidebar: 0px 3px 2px #636363;
+    --rounded: 0px;
+
+
+    scrollbar-color: #636363 #2D2A34;
+    scrollbar-width: thin;
+  
 }
+
+::-webkit-scrollbar {
+    width: 5px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #b8b7b7; 
+}
+
+::-webkit-scrollbar-track {
+    background-color: #2D2A34; 
+}
+
 
 #grid-container {
     background-color: var(--swatch-foundation);
@@ -27,26 +73,52 @@
 
 #navbar {
     box-shadow: 2px 2px 2px var(--swatch-primary); 
+    margin: 0.5%;
 }
 
 #left-sidebar {
     background-color: var(--swatch-complement);
     color: rgb(233,237,240);
+    margin-left: 5px;
 }
 
 #workspace {
     background-color: var(--swatch-primary);
     color: rgb(233,237,240);
+    margin-right: 5px;
+    box-shadow: 2px 2px 2px var(--swatch-primary);
+    
 }
 
 #title-div {
     color: rgb(255,200,25);
     font-weight: bold;
-    font-size: 14pt;
+    font-size: 18pt;
+    margin-left: 10px;
+    margin-top: 6px;
 }
+
 
 #left-sidebar-header {
     border-bottom: dotted;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 5%;
+    margin-top: 6.5%;
+    /* width: 90%; */
+    height: 5%;
+    text-align: left;
+    background-color: var(--swatch-complement); 
+}
+
+#todo-lists-list{
+    overflow: auto;
+    overflow-x: hidden;
+    flex-direction: column;
+    margin: 0;
+    background-color: #353a44;
 }
 
 #todo-list-table-header {
@@ -60,16 +132,112 @@
 .list-item-card {
     border-bottom: solid;
 }
+.list-item-card:hover {
+    background-color: #7a7b7c3d;
+}
+.list-item-card-header {
+    border-bottom: dotted;
+}
+span#add-undo-redo-box {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: right;
+    
+    float: right;
+    margin-right: 15%;
+}
 
 .todo_button {
     cursor:pointer;
     background-color: var(--swatch-complement);
+    margin-left: 5%;
+    margin-right: 5%;
+}
+#task-col-header {
+    background-color: var(--swatch-primary);
+    margin-left: 1%;
+    margin-top: 0%;
+}
+#date-col-header {
+    background-color: var(--swatch-primary);
+    margin-left: 1%;
+    margin-top: 0%;
+}
+#status-col-header {
+    background-color: var(--swatch-primary);
+    margin-left: 1%;
+    margin-top: 0%;
+}
+
+
+#add-item-button{
+    background-color: var(--swatch-primary);
+}
+#add-item-button:hover{
+    background-color: var(--hover-light);
+}
+
+#delete-list-button{
+    background-color: var(--swatch-primary);
+}
+#delete-list-button:hover{
+    background-color: var(--hover-light);
+}
+
+#close-list-button{
+    background-color: var(--swatch-primary);
+}
+#close-list-button:hover{
+    background-color: var(--hover-light);
+}
+
+#add-list-button:hover{
+    background-color: var(--hover-light);
+}
+
+
+
+.table-header-button{
+    background-color: var(--swatch-primary);
+}
+.table-header-button:hover{
+    background-color: var(--hover-light);
+}
+
+#task-col-header:hover {
+    background-color: #7a7b7c3d;
+}
+
+#date-col-header:hover {
+    background-color: #7a7b7c3d;
+}
+
+#status-col-header:hover {
+    background-color: #7a7b7c3d;
+}
+
+.todo_button-list {
+    cursor:pointer;
+    background-color: var(--swatch-complement);
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+.todo_button-list:hover {
+    background-color: #7a7b7c3d;
 }
 
 .todo_button:hover {
-    background-color: var(--swatch-contrast);
+    background-color: var(--hover-light);
 }
 
 #add-list-button{
     color : #ffc800;
+    
+}
+
+
+#modal-overlay {
+    background-color: rgba(0,0,0,0.4);
 }

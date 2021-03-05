@@ -7,6 +7,7 @@ import AddNewItem_Transaction from './transactions/AddNewItem_Transaction.js'
 import Workspace_Transaction from './transactions/Workspace_Transaction.js'
 import UpButton_Transaction from './transactions/UpButton_Transaction.js'
 import DownButton_Transaction from './transactions/DownButton_Transaction.js'
+import DeleteItem_Transaction from './transactions/DeleteItem_Transaction.js'
 
 /**
  * ToDoModel
@@ -75,22 +76,27 @@ export default class ToDoModel {
      * Creates a new transaction for adding an item and adds it to the transaction stack.
      */
     addNewItemTransaction() {
-        var self = this;
-        for (let i = 0; i < this.toDoLists[0].items.length; i++) {
-            if(document.getElementById("updateDate-"+this.toDoLists[0].items[i].id) != null){
-            var text = document.getElementById("updateDate-"+this.toDoLists[0].items[i].id).value;
-            this.toDoLists[0].items[i].dueDate = text;
-            this.toDoLists[0].items[i].description = document.getElementById("updateDescription-"+this.toDoLists[0].items[i].id).innerHTML;
-            this.toDoLists[0].items[i].status = document.getElementById("button-"+this.toDoLists[0].items[i].id).innerHTML;
-            }    
-        }
-        this.currentList = this.toDoLists[0];
 
         let transaction = new AddNewItem_Transaction(this);
         this.tps.addTransaction(transaction);
+        var self = this;
+        for (let i = 0; i < this.toDoLists[0].items.length; i++) {
+            if(document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id) != null){
+            var text = document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id).innerHTML;
+            this.toDoLists[0].items[i].dueDate = text;
+            this.toDoLists[0].items[i].description = document.getElementById("updateDescription-"+this.toDoLists[0].items[i].id).innerHTML;
+            this.toDoLists[0].items[i].status = document.getElementById("updateStatus-"+this.toDoLists[0].items[i].id).innerHTML;
+            }    
+        }
+        this.currentList = this.toDoLists[0];
         self.forColorModel();
     }
 
+    /**
+     * addNewWorkspaceTransaction
+     * 
+     * Creates a new transaction for editing an item(description, duedate, status) and adds it to the transaction stack.
+     */
     addNewWorkspaceTransaction(){
         var self = this;
         let transaction = new Workspace_Transaction(this,self.currentObj(self.updatePrev()));
@@ -99,12 +105,24 @@ export default class ToDoModel {
         
     }
 
+    /**
+     * addUpButton_Transaction
+     * 
+     * @param id the item id that I clicked.
+     * Creates a new transaction for editing an item(up button) and adds it to the transaction stack.
+     */
     addUpButton_Transaction(id){
         var self = this;
         let transaction = new UpButton_Transaction(this,id);
         this.tps.addTransaction(transaction);
         self.forColorModel();
     }
+    /**
+     * addDownButton_Transaction
+     * 
+     *  @param id the item id that I clicked.
+     * Creates a new transaction for editing an item(down button) and adds it to the transaction stack.
+     */
     addDownButton_Transaction(id){
         var self = this;
         let transaction = new DownButton_Transaction(this,id);
@@ -112,30 +130,44 @@ export default class ToDoModel {
         self.forColorModel();
     }
 
+    /**
+     * deleteItemButton_Transaction
+     * 
+     * @param id the item id that I clicked.
+     * Creates a new transaction for editing an item(delete button) and adds it to the transaction stack.
+     */
+    deleteItemButton_Transaction(id){
+        var self = this;
+        let transaction = new DeleteItem_Transaction(this,id);
+        this.tps.addTransaction(transaction);
+        self.forColorModel();
+    }
+
+    /**
+     * forColorModel()
+     * 
+     * Button disable/able control after doing transaction work.
+     */
     forColorModel(){
         if((this.tps.mostRecentTransaction == -1)){ 
             document.getElementById('undo-button').disabled = true;
             document.getElementById('undo-button').style.pointerEvents = "none";
-            document.getElementById('undo-button').style.backgroundColor = "#40454e";
-            document.getElementById('undo-button').style.color = "#353a44";
+            document.getElementById('undo-button').style.color = "#322D2D";
         }
         else{
             document.getElementById('undo-button').disabled = false;
             document.getElementById('undo-button').style.pointerEvents = "auto";
-            document.getElementById('undo-button').style.backgroundColor = "#353a44";
             document.getElementById('undo-button').style.color = "#e9edf0";
         }
         if((this.tps.mostRecentTransaction+1) < this.tps.numTransactions){
             document.getElementById('redo-button').disabled = false;
             document.getElementById('redo-button').style.pointerEvents = "auto";
-            document.getElementById('redo-button').style.backgroundColor = "#353a44";
             document.getElementById('redo-button').style.color = "#e9edf0";
         }
         else{
             document.getElementById('redo-button').disabled = true;
             document.getElementById('redo-button').style.pointerEvents = "none";
-            document.getElementById('redo-button').style.backgroundColor = "#40454e";
-            document.getElementById('redo-button').style.color = "#353a44";
+            document.getElementById('redo-button').style.color = "#322D2D";
         }        
     }
     /**
@@ -146,7 +178,7 @@ export default class ToDoModel {
      * 
      * @param {*} initName The name of this to add.
      */
-    addNewList(initName) { //한글 새로운 사이드 리스트 추가시 일로옴 
+    addNewList(initName) { 
         let newList = new ToDoList(this.nextListId++);
         if (initName)
             newList.setName(initName);
@@ -182,25 +214,25 @@ export default class ToDoModel {
      */
     loadList(listId) {
 
+        this.tps = new jsTPS();
+        let self = this;
+        self.forColorModel();
+
         document.getElementById('add-list-button').disabled = true;
         document.getElementById('add-list-button').style.pointerEvents = "none";
-        document.getElementById('add-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('add-list-button').style.color = "#353a44";
+        document.getElementById('add-list-button').style.color = "#322D2D";
         
         document.getElementById('add-item-button').disabled = false;
         document.getElementById('add-item-button').style.pointerEvents = "auto";
-        document.getElementById('add-item-button').style.backgroundColor = "#353a44";
         document.getElementById('add-item-button').style.color = "#e9edf0";
 
         document.getElementById('delete-list-button').disabled = false;
         document.getElementById('delete-list-button').style.pointerEvents = "auto";
-        document.getElementById('delete-list-button').style.backgroundColor = "#353a44";
         document.getElementById('delete-list-button').style.color = "#e9edf0";
 
 
         document.getElementById('close-list-button').disabled = false;
         document.getElementById('close-list-button').style.pointerEvents = "auto";
-        document.getElementById('close-list-button').style.backgroundColor = "#353a44";
         document.getElementById('close-list-button').style.color = "#e9edf0";
 
         let listIndex = -1;
@@ -213,11 +245,11 @@ export default class ToDoModel {
 
             //한글 문제3
             for (let i = 0; i < this.toDoLists[0].items.length; i++) {
-                if(document.getElementById("updateDate-"+this.toDoLists[0].items[i].id) != null){
-                var text = document.getElementById("updateDate-"+this.toDoLists[0].items[i].id).value;
+                if(document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id) != null){
+                var text = document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id).innerHTML;
                 this.toDoLists[0].items[i].dueDate = text;
                 this.toDoLists[0].items[i].description = document.getElementById("updateDescription-"+this.toDoLists[0].items[i].id).innerHTML;
-                this.toDoLists[0].items[i].status = document.getElementById("button-"+this.toDoLists[0].items[i].id).innerHTML;
+                this.toDoLists[0].items[i].status = document.getElementById("updateStatus-"+this.toDoLists[0].items[i].id).innerHTML;
                 }    
             }
         
@@ -228,6 +260,9 @@ export default class ToDoModel {
 
             this.currentList = listToLoad;
             this.view.viewList(this.currentList);
+
+            document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.backgroundColor = "#ffc800";
+            document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.color = "black";
         }
     }
     /**
@@ -265,19 +300,17 @@ export default class ToDoModel {
         
         document.getElementById('add-item-button').disabled = true;
         document.getElementById('add-item-button').style.pointerEvents = "none";
-        document.getElementById('add-item-button').style.backgroundColor = "#40454e";
-        document.getElementById('add-item-button').style.color = "#353a44";
+        document.getElementById('add-item-button').style.color = "#322D2D";
+        
 
         document.getElementById('delete-list-button').disabled = true;
         document.getElementById('delete-list-button').style.pointerEvents = "none";
-        document.getElementById('delete-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('delete-list-button').style.color = "#353a44";
+        document.getElementById('delete-list-button').style.color = "#322D2D";
 
 
         document.getElementById('close-list-button').disabled = true;
         document.getElementById('close-list-button').style.pointerEvents = "none";
-        document.getElementById('close-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('close-list-button').style.color = "#353a44";
+        document.getElementById('close-list-button').style.color = "#322D2D";
     }
 
     // WE NEED THE VIEW TO UPDATE WHEN DATA CHANGES.
@@ -300,22 +333,48 @@ export default class ToDoModel {
         for (let i = 0; i < list.items.length; i++) {
             document.getElementById("updateDescription-"+ list.items[i].id).addEventListener('blur' , function(){
                 self.addNewWorkspaceTransaction();
+                // if(list.items[i].description != document.getElementById("updateDescription-"+ list.items[i].id).innerHTML){
+                //     self.addNewWorkspaceTransaction();
+                // }
+                
             });
+            document.getElementById("updateDateDiv-"+ list.items[i].id).onclick = function(){
+                document.getElementById("updateDateDiv-"+ list.items[i].id).style.display = "none";
+                document.getElementById("updateDate-"+ list.items[i].id).style.display = "block";
+                document.getElementById("updateDate-"+ list.items[i].id).focus();
+            }
+
             document.getElementById("updateDate-"+ list.items[i].id).addEventListener('blur' , function(){
+                document.getElementById("updateDateDiv-"+ list.items[i].id).innerHTML = document.getElementById("updateDate-"+ list.items[i].id).value;
                 self.addNewWorkspaceTransaction();
+                document.getElementById("updateDate-"+ list.items[i].id).style.display = "none";
+                document.getElementById("updateDateDiv-"+ list.items[i].id).style.display = "block";
             });
-            document.getElementById("drop-content-"+ list.items[i].id).onchange = function(){
+            
+            document.getElementById("updateStatus-"+ list.items[i].id).onclick = function(){
+                document.getElementById("updateStatus-"+ list.items[i].id).style.display = "none";
+                document.getElementById("drop-content-"+ list.items[i].id).style.display = "block";
+                document.getElementById("drop-content-"+ list.items[i].id).focus();
+
+            }
+            
+            document.getElementById("drop-content-"+ list.items[i].id).addEventListener('blur' , function(){
                 self.addNewWorkspaceTransaction();
                 for(let i=0; i< list.items.length; i++){
                     if(list.items[i].status == "complete"){
-                        document.getElementById("button-"+ list.items[i].id).style.color = '#8ed4f8';
+                        document.getElementById("updateStatus-"+ list.items[i].id).innerHTML = "complete";
+                        document.getElementById("updateStatus-"+ list.items[i].id).style.color = '#8ed4f8';
                     }
                     else if(list.items[i].status == "incomplete" ){
-                        document.getElementById("button-"+ list.items[i].id).style.color = '#ffc800';
+                        document.getElementById("updateStatus-"+ list.items[i].id).innerHTML = "incomplete";
+                        document.getElementById("updateStatus-"+ list.items[i].id).style.color = '#ffc800';
                     }
                 }
                 
-            }
+                document.getElementById("drop-content-"+ list.items[i].id).style.display = "none";
+                document.getElementById("updateStatus-"+ list.items[i].id).style.display = "block";
+                
+            });
 
             document.getElementById("upbutton-"+ list.items[i].id).onclick = function(){
                 self.addUpButton_Transaction(list.items[i].id);
@@ -324,12 +383,16 @@ export default class ToDoModel {
                 self.addDownButton_Transaction(list.items[i].id);
             }
             document.getElementById("closebutton-"+ list.items[i].id).onclick = function(){
-                self.addNewWorkspaceTransaction();
+                self.deleteItemButton_Transaction(list.items[i].id);
             }
         }
     
     }
 
+    /**
+     * For changing order of items when click up button
+     * @param {*} id 
+     */
     up(id){
         let index =0;
                 let tmp = [];
@@ -347,6 +410,10 @@ export default class ToDoModel {
                 }
     }
 
+    /**
+     * For changing order of items when click down button
+     * @param {*} id 
+     */
     down(id){
         let index =0;
                 let tmp = [];
@@ -364,6 +431,22 @@ export default class ToDoModel {
                 }
     }
 
+    /**
+     * For changing order of items when click delete button
+     * @param {*} id 
+     */
+    delete(id){
+        let index =0;
+        for(let j=0; j<this.toDoLists[0].items.length; j++){
+            if(this.toDoLists[0].items[j].id == id){
+                index = j;
+            }
+        }
+        this.toDoLists[0].items.splice(index,1);
+        this.currentList = this.toDoLists[0];
+        this.view.viewList(this.curentList);
+    }
+
     changeList(id){
         let changelist = this.toDoLists[id];
         if(id==0){
@@ -372,12 +455,15 @@ export default class ToDoModel {
         
     }
 
+    /**
+     * For updating todoLists when we edit some items. 
+     */
     updateChange(){
         
         //update todolist      
         for (let i = 0; i < this.toDoLists[0].items.length; i++) {
-            if(document.getElementById("updateDate-"+this.toDoLists[0].items[i].id) != null){
-            var text = document.getElementById("updateDate-"+this.toDoLists[0].items[i].id).value;
+            if(document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id) != null){
+            var text = document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id).innerHTML;
             this.toDoLists[0].items[i].dueDate = text;
             this.toDoLists[0].items[i].description = document.getElementById("updateDescription-"+this.toDoLists[0].items[i].id).innerHTML;
             this.toDoLists[0].items[i].status = document.getElementById("drop-content-"+this.toDoLists[0].items[i].id).value;
@@ -387,14 +473,10 @@ export default class ToDoModel {
         return this.currentList;
     }
 
-    updatePrev(){
-        let previousLists = this.deepCopy(this.toDoLists);
-        return previousLists[0];
-    }
     currentObj(obj){
         for (let i = 0; i < this.toDoLists[0].items.length; i++) {
-            if(document.getElementById("updateDate-"+this.toDoLists[0].items[i].id) != null){
-            obj.items[i].dueDate = document.getElementById("updateDate-"+this.toDoLists[0].items[i].id).value;
+            if(document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id) != null){
+            obj.items[i].dueDate = document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id).innerHTML;
             obj.items[i].description = document.getElementById("updateDescription-"+this.toDoLists[0].items[i].id).innerHTML;
             obj.items[i].status = document.getElementById("drop-content-"+this.toDoLists[0].items[i].id).value;
             }
@@ -402,6 +484,17 @@ export default class ToDoModel {
         return obj;
     }
 
+    /**
+     * Get previous todoList[0] with type obj
+     */
+    updatePrev(){
+        let previousLists = this.deepCopy(this.toDoLists);
+        return previousLists[0];
+    }
+
+    /**
+     * Do deep copy of previous Lists.
+     */
     deepCopy(obj) {
         if (obj === null || typeof(obj) !== "object") {
           return obj;
@@ -446,31 +539,41 @@ export default class ToDoModel {
         return totalid;
     }
 
+    /**
+     * Initialize Workspace when click delete-list-button
+     */
     initializeWorkSpace(){
         this.view.viewList(null);
+        document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.backgroundColor = "#353a44";
+        document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.color = "#e9edf0";
+
         document.getElementById('add-list-button').disabled = false;
         document.getElementById('add-list-button').style.pointerEvents = "auto";
-        document.getElementById('add-list-button').style.backgroundColor = "#353a44";
         document.getElementById('add-list-button').style.color = "#ffc800";
         
         document.getElementById('add-item-button').disabled = true;
         document.getElementById('add-item-button').style.pointerEvents = "none";
-        document.getElementById('add-item-button').style.backgroundColor = "#40454e";
-        document.getElementById('add-item-button').style.color = "#353a44";
+        document.getElementById('add-item-button').style.color = "#322D2D";
+        
 
         document.getElementById('delete-list-button').disabled = true;
         document.getElementById('delete-list-button').style.pointerEvents = "none";
-        document.getElementById('delete-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('delete-list-button').style.color = "#353a44";
+        document.getElementById('delete-list-button').style.color = "#322D2D";
 
 
         document.getElementById('close-list-button').disabled = true;
         document.getElementById('close-list-button').style.pointerEvents = "none";
-        document.getElementById('close-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('close-list-button').style.color = "#353a44";
+        document.getElementById('close-list-button').style.color = "#322D2D";
+
+        document.getElementById('undo-button').disabled = true;
+        document.getElementById('undo-button').style.pointerEvents = "none";
+        document.getElementById('undo-button').style.color = "#322D2D";
+
+        document.getElementById('redo-button').disabled = true;
+        document.getElementById('redo-button').style.pointerEvents = "none";
+        document.getElementById('redo-button').style.color = "#322D2D";
+
     }
-    
-      
-      
+         
 
 }

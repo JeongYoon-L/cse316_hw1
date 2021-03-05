@@ -18,48 +18,40 @@ export default class ToDoController {
         if(this.model.tps.mostRecentTransaction ==-1){
             document.getElementById('undo-button').disabled = true;
             document.getElementById('undo-button').style.pointerEvents = "none";
-            document.getElementById('undo-button').style.backgroundColor = "#40454e";
-            document.getElementById('undo-button').style.color = "#353a44";
+            document.getElementById('undo-button').style.color = "#322D2D";
         }
         else{
             document.getElementById('undo-button').disabled = false;
             document.getElementById('undo-button').style.pointerEvents = "auto";
-            document.getElementById('undo-button').style.backgroundColor = "#353a44";
             document.getElementById('undo-button').style.color = "#e9edf0";
         }
         if(this.model.tps.numTransactions ==0){
             document.getElementById('redo-button').disabled = true;
             document.getElementById('redo-button').style.pointerEvents = "none";
-            document.getElementById('redo-button').style.backgroundColor = "#40454e";
-            document.getElementById('redo-button').style.color = "#353a44";
+            document.getElementById('redo-button').style.color = "#322D2D";
         }
         else{
             document.getElementById('redo-button').disabled = false;
             document.getElementById('redo-button').style.pointerEvents = "auto";
-            document.getElementById('redo-button').style.backgroundColor = "#353a44";
             document.getElementById('redo-button').style.color = "#e9edf0";
         }
 
         document.getElementById('add-list-button').disabled = false;
         document.getElementById('add-list-button').style.pointerEvents = "auto";
-        document.getElementById('add-list-button').style.backgroundColor = "#353a44";
         document.getElementById('add-list-button').style.color = "#ffc800";
         
         document.getElementById('add-item-button').disabled = true;
         document.getElementById('add-item-button').style.pointerEvents = "none";
-        document.getElementById('add-item-button').style.backgroundColor = "#40454e";
-        document.getElementById('add-item-button').style.color = "#353a44";
+        document.getElementById('add-item-button').style.color = "#322D2D";        
 
         document.getElementById('delete-list-button').disabled = true;
         document.getElementById('delete-list-button').style.pointerEvents = "none";
-        document.getElementById('delete-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('delete-list-button').style.color = "#353a44";
+        document.getElementById('delete-list-button').style.color = "#322D2D";
 
 
         document.getElementById('close-list-button').disabled = true;
         document.getElementById('close-list-button').style.pointerEvents = "none";
-        document.getElementById('close-list-button').style.backgroundColor = "#40454e";
-        document.getElementById('close-list-button').style.color = "#353a44";
+        document.getElementById('close-list-button').style.color = "#322D2D";
 
 
         // SETUP ALL THE EVENT HANDLERS SINCE THEY USE THE MODEL
@@ -79,11 +71,24 @@ export default class ToDoController {
 
         }
         document.getElementById("delete-list-button").onmousedown = function() {
-            var modal = document.getElementById('id01');
+            var modal = document.getElementById("modal-overlay");
             modal.style.display = 'block';
+            var modal1 = document.getElementById("id01");
+            modal1.style.display = 'block';
+
             document.getElementById("confirmbtn").onclick = function(){
+                appModel.initializeWorkSpace(); //initialize workspace
                 appModel.removeCurrentList();
                 modal.style.display = 'none';
+                modal1.style.display = 'none';
+            }
+            document.getElementById("cancelbtn").onclick = function(){
+                modal.style.display = 'none';
+                modal1.style.display = 'none';
+            }
+            document.getElementsByClassName("close").onclick = function(){
+                modal.style.display = 'none';
+                modal1.style.display = 'none';
             }
         }
 
@@ -103,26 +108,22 @@ export default class ToDoController {
         if((appModel.tps.mostRecentTransaction == -1)){ 
             document.getElementById('undo-button').disabled = true;
             document.getElementById('undo-button').style.pointerEvents = "none";
-            document.getElementById('undo-button').style.backgroundColor = "#40454e";
-            document.getElementById('undo-button').style.color = "#353a44";
+            document.getElementById('undo-button').style.color = "#322D2D";
         }
         else{
             document.getElementById('undo-button').disabled = false;
             document.getElementById('undo-button').style.pointerEvents = "auto";
-            document.getElementById('undo-button').style.backgroundColor = "#353a44";
             document.getElementById('undo-button').style.color = "#e9edf0";
         }
         if((appModel.tps.mostRecentTransaction+1) < appModel.tps.numTransactions){
             document.getElementById('redo-button').disabled = false;
             document.getElementById('redo-button').style.pointerEvents = "auto";
-            document.getElementById('redo-button').style.backgroundColor = "#353a44";
             document.getElementById('redo-button').style.color = "#e9edf0";
         }
         else{
             document.getElementById('redo-button').disabled = true;
             document.getElementById('redo-button').style.pointerEvents = "none";
-            document.getElementById('redo-button').style.backgroundColor = "#40454e";
-            document.getElementById('redo-button').style.color = "#353a44";
+            document.getElementById('redo-button').style.color = "#322D2D";
         }
 
     }

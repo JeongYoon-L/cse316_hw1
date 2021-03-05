@@ -4,8 +4,8 @@
     height:100%;
     display: grid;
     padding: 1px;
-    grid-template-rows: 5% 95%;
-    grid-template-columns: 12% 88%;
+    grid-template-rows: 7% 93%;
+    grid-template-columns: 14% 86%;
 }
 
 #navbar {
@@ -24,12 +24,14 @@
     grid-template-columns: 60% 40%;
 }
 
-#left-sidebar-header-text {
-    
+span.left-sidebar-header-text {
+  font-size: 18.72px; 
+  margin-bottom: 5%;   
 }
 
 #left-sidebar-controls {
     text-align: right;
+    margin-left: 5%;
 }
 
 #workspace {
@@ -37,30 +39,65 @@
     grid-row: 2 span 1;
     /*display: flex;*/
     flex-direction: column;
-    overflow : auto;
+    font-size : 13pt;
+    
 }
 
 #todo-list-items-div{
-    display: flex;
     flex-direction: column;
+    height: 92%;
+    overflow-y: scroll;
+
 }
 
+#workspace{
+  scrollbar-color: #727171 #2D2A34;
+  scrollbar-width: thin;
+
+}
+*{ scrollbar-color:  #727171 #2D2A34 !important; scrollbar-width: thin !important; }
+
+
 .list-item-card {
-    height: 5%;
     display: flex;
     flex-direction: row;
+
+    align-content: center;
+    margin-left: 1.5%;
+    margin-right: 3%;
+    
+    width: 97%;
+    height: 8%;
+    text-align: left;
+}
+
+.list-item-card-header {
+  height: 5%;
+  display: flex;
+  flex-direction: row;
+
+  align-content: center;
+  margin-left: 1.5%;
+  margin-right: 3%;
+  margin-top: 1%; 
+  width: 97%;
+  height: 5%;
+  text-align: left;
 }
 
 .task-col {
     width:25%;
+    margin-top: 1%;
 }
 
 .due-date-col {
     width:25%;
+    margin-top: 1%;
 }
 
 .status-col {
-    width:25%
+    width:25%;
+    margin-top: 1%;
 }
 
 .list-controls-col {
@@ -71,9 +108,13 @@
 
 .list-item-control {
     width: 20%;
+    cursor: pointer;
+    text-align : center;
 }
 
-body {font-family: Arial, Helvetica, sans-serif;}
+
+
+body {font-family: Arial, Helvetica, sans-serif; font-weight: bold;}
 * {box-sizing: border-box;}
 
 /* Set a style for all buttons */
@@ -81,7 +122,6 @@ button {
   background-color: #40454e;
   color: white;
   padding: 14px 20px;
-  margin: 8px 0;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -115,6 +155,10 @@ button {
   padding: 15px;
   text-align: left;
   color: white;
+  background-color: #636363 ;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
 }
 
 /* The Modal (background) */
@@ -130,14 +174,9 @@ button {
 }
 h1{
     font-size: 25px;
+    border-bottom: dotted;
 }
-/* Modal Content/Box  모달 박스*/
-.modal-content {
-  background-color: #636363 ;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
+
 
 /* Style the horizontal ruler */
 hr {
@@ -176,21 +215,19 @@ hr {
 input{
   color: rgb(233,237,240);
   background-color: #40454e;
-  font-family: 'Lexend Exa', sans-serif;
+  width: 25%;
 }
 
 select{
   background-color: #40454e;
-  font-family: 'Lexend Exa', sans-serif;
   z-index: 1;
   text-align-last: center;
   text-align: center;
   color: white;
-  padding: 14px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 25%;
   opacity: 0.9;
 }
 
@@ -204,4 +241,24 @@ select{
 }
 #redo-button{
   pointer-events : auto;
+}
+
+.grid-list-item{
+  display: flex;
+  overflow: auto;
+  overflow-x: hidden;
+  flex-direction: column;
+  margin: 0;
+  height: 92%;
+}
+
+#modal-overlay {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
