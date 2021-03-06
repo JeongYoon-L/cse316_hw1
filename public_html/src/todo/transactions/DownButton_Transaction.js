@@ -16,7 +16,6 @@ export default class DownButton_Transaction extends jsTPS_Transaction {
         this.prev = this.model.updatePrev();
 
         this.model.down(this.id);
-        //this.changedmodel= this.model.updateChange();
         this.model.view.viewList(this.model.currentList);
     
     }

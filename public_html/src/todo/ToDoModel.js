@@ -214,7 +214,7 @@ export default class ToDoModel {
      */
     loadList(listId) {
 
-        this.tps = new jsTPS();
+        this.tps = new jsTPS(); //initialize Transaction when loading new List
         let self = this;
         self.forColorModel();
 
@@ -243,7 +243,6 @@ export default class ToDoModel {
         if (listIndex >= 0) {
             let listToLoad = this.toDoLists[listIndex];
 
-            //한글 문제3
             for (let i = 0; i < this.toDoLists[0].items.length; i++) {
                 if(document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id) != null){
                 var text = document.getElementById("updateDateDiv-"+this.toDoLists[0].items[i].id).innerHTML;
@@ -253,7 +252,7 @@ export default class ToDoModel {
                 }    
             }
         
-            //한글 문제1
+            //move selected List on top
             this.toDoLists[listIndex] = this.toDoLists[0];
             this.toDoLists[0]= listToLoad
             this.view.refreshLists(this.toDoLists);
@@ -301,12 +300,10 @@ export default class ToDoModel {
         document.getElementById('add-item-button').disabled = true;
         document.getElementById('add-item-button').style.pointerEvents = "none";
         document.getElementById('add-item-button').style.color = "#322D2D";
-        
 
         document.getElementById('delete-list-button').disabled = true;
         document.getElementById('delete-list-button').style.pointerEvents = "none";
         document.getElementById('delete-list-button').style.color = "#322D2D";
-
 
         document.getElementById('close-list-button').disabled = true;
         document.getElementById('close-list-button').style.pointerEvents = "none";
@@ -332,10 +329,10 @@ export default class ToDoModel {
         var self = this;
         for (let i = 0; i < list.items.length; i++) {
             document.getElementById("updateDescription-"+ list.items[i].id).addEventListener('blur' , function(){
-                self.addNewWorkspaceTransaction();
-                // if(list.items[i].description != document.getElementById("updateDescription-"+ list.items[i].id).innerHTML){
-                //     self.addNewWorkspaceTransaction();
-                // }
+                //self.addNewWorkspaceTransaction();
+                if(list.items[i].description != document.getElementById("updateDescription-"+ list.items[i].id).innerHTML &&document.getElementById("updateDescription-"+ list.items[i].id).innerHTML != null){
+                    self.addNewWorkspaceTransaction();
+                }
                 
             });
             document.getElementById("updateDateDiv-"+ list.items[i].id).onclick = function(){
@@ -345,8 +342,12 @@ export default class ToDoModel {
             }
 
             document.getElementById("updateDate-"+ list.items[i].id).addEventListener('blur' , function(){
-                document.getElementById("updateDateDiv-"+ list.items[i].id).innerHTML = document.getElementById("updateDate-"+ list.items[i].id).value;
-                self.addNewWorkspaceTransaction();
+                
+                if(list.items[i].dueDate != document.getElementById("updateDate-"+ list.items[i].id).value &&document.getElementById("updateDate-"+ list.items[i].id).value != null){
+                    document.getElementById("updateDateDiv-"+ list.items[i].id).innerHTML = document.getElementById("updateDate-"+ list.items[i].id).value;    
+                    self.addNewWorkspaceTransaction();
+                }
+                
                 document.getElementById("updateDate-"+ list.items[i].id).style.display = "none";
                 document.getElementById("updateDateDiv-"+ list.items[i].id).style.display = "block";
             });
@@ -359,13 +360,16 @@ export default class ToDoModel {
             }
             
             document.getElementById("drop-content-"+ list.items[i].id).addEventListener('blur' , function(){
-                self.addNewWorkspaceTransaction();
+                if(list.items[i].status != document.getElementById("drop-content-"+ list.items[i].id).value &&document.getElementById("drop-content-"+ list.items[i].id).value != null){
+                    self.addNewWorkspaceTransaction();
+                }
+                
                 for(let i=0; i< list.items.length; i++){
-                    if(list.items[i].status == "complete"){
+                    if(list.items[i].status == "complete" && document.getElementById("updateStatus-"+ list.items[i].id) != null){
                         document.getElementById("updateStatus-"+ list.items[i].id).innerHTML = "complete";
                         document.getElementById("updateStatus-"+ list.items[i].id).style.color = '#8ed4f8';
                     }
-                    else if(list.items[i].status == "incomplete" ){
+                    else if(list.items[i].status == "incomplete" && document.getElementById("updateStatus-"+ list.items[i].id) != null ){
                         document.getElementById("updateStatus-"+ list.items[i].id).innerHTML = "incomplete";
                         document.getElementById("updateStatus-"+ list.items[i].id).style.color = '#ffc800';
                     }
@@ -545,11 +549,11 @@ export default class ToDoModel {
     initializeWorkSpace(){
         this.view.viewList(null);
         document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.backgroundColor = "#353a44";
-        document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.color = "#e9edf0";
+        document.getElementById('todo-list-'+ this.toDoLists[0].id ).style.color = "var(--swatch-text)";
 
         document.getElementById('add-list-button').disabled = false;
         document.getElementById('add-list-button').style.pointerEvents = "auto";
-        document.getElementById('add-list-button').style.color = "#ffc800";
+        document.getElementById('add-list-button').style.color = "var(--swatch-text-accent)";
         
         document.getElementById('add-item-button').disabled = true;
         document.getElementById('add-item-button').style.pointerEvents = "none";

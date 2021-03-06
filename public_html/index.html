@@ -49,11 +49,13 @@
         <div id = "modal-overlay" style= "display: none">
             <div id="id01" class="modal">
                 <div class="container">
-                    <button type= "button" onclick="document.getElementById('id01').style.display='none'; document.getElementById('modal-overlay').style.display='none';" class="close" title="Close Modal">×</button>
-                <h1>Delete List?</h1>            
+                    <div class= "modalheader">
+                        <h1>Delete List?</h1>  
+                        <button type= "button" onclick="document.getElementById('id01').style.display='none'; document.getElementById('modal-overlay').style.display='none';" class="close" title="Close Modal">×</button>
+                    </div>
                 <div class="clearfix">
-                    <button type="button" onclick="document.getElementById('id01').style.display='none'" id="confirmbtn">Confirm</button>
-                    <button type="button" onclick="document.getElementById('id01').style.display='none'" id="cancelbtn">Cancel</button>
+                    <button type="button" class = "modalButton" onclick="document.getElementById('id01').style.display='none'" id="confirmbtn">Confirm</button>
+                    <button type="button" class = "modalButton" onclick="document.getElementById('id01').style.display='none'" id="cancelbtn">Cancel</button>
                 </div>
                 </div>
                 </div>

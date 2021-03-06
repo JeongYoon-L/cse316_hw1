@@ -16,7 +16,6 @@ export default class DeleteItem_Transaction extends jsTPS_Transaction {
         this.prev = this.model.updatePrev();
 
         this.model.delete(this.id);
-        //this.changedmodel= this.model.updateChange();
         this.model.view.viewList(this.model.currentList);
     
     }

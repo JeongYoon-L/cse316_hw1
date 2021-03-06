@@ -55,7 +55,7 @@ span.left-sidebar-header-text {
   scrollbar-width: thin;
 
 }
-*{ scrollbar-color:  #727171 #2D2A34 !important; scrollbar-width: thin !important; }
+*{ scrollbar-color:  #727171 #2D2A34 !important; scrollbar-width: thin !important; margin: 0px; }
 
 
 .list-item-card {
@@ -104,6 +104,7 @@ span.left-sidebar-header-text {
     width:25%;
     display: flex;
     flex-direction: row;
+    margin-top: 0.6%;
 }
 
 .list-item-control {
@@ -114,7 +115,7 @@ span.left-sidebar-header-text {
 
 
 
-body {font-family: Arial, Helvetica, sans-serif; font-weight: bold;}
+body {font-family: Arial, Helvetica, sans-serif; font-weight: bold; overflow: hidden;}
 * {box-sizing: border-box;}
 
 /* Set a style for all buttons */
@@ -141,13 +142,13 @@ button {
 
 /* Add a color to the cancel button */
 #confirmbtn {
-  background-color: #636363 ;
+  
   
 }
 
 /* Add a color to the delete button */
 #cancelbtn {
-  background-color: #636363 ;
+  
 }
 
 /* Add padding and center-align text to the container */
@@ -155,7 +156,7 @@ button {
   padding: 15px;
   text-align: left;
   color: white;
-  background-color: #636363 ;
+  background-color: var(--deep-blue) ;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
@@ -174,7 +175,6 @@ button {
 }
 h1{
     font-size: 25px;
-    border-bottom: dotted;
 }
 
 
@@ -189,7 +189,6 @@ hr {
   font-size: 30px;
   font-weight: bold;
   color: #f1f1f1;
-  background-color: #636363 ;
   width: 4%;
   
 }
@@ -204,6 +203,15 @@ hr {
   content: "";
   clear: both;
   display: table;
+}
+.clearfix{
+  margin: 4%;
+    display: flex;
+    flex-direction: row;
+    height: 1%;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
 }
 
 /* Change styles for cancel button and delete button on extra small screens */
@@ -261,4 +269,28 @@ select{
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.modalButton{
+  margin-bottom: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
+  width: 20%;
+  padding: 2%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  position: relative;
+}
+.modalheader {
+  margin: 4%;
+  display: flex;
+  flex-direction: row;
+  height: 1%;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  border-bottom: dotted;
 }

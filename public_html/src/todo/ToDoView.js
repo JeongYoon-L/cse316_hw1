@@ -115,9 +115,9 @@ export default class ToDoView {
                                 + "</select>"   
 
                                 + "<div class='list-controls-col'>"
-                                + " <div class='list-item-control material-icons' id='upbutton-" + listItem.id + "' >keyboard_arrow_up</div>"
-                                + " <div class='list-item-control material-icons' id='downbutton-" + listItem.id + "' >keyboard_arrow_down</div>"
-                                + " <div class='list-item-control material-icons' id='closebutton-" + listItem.id + "' >close</div>"
+                                + " <div class='list-item-control material-icons hover_button' id='upbutton-" + listItem.id + "' >keyboard_arrow_up</div>"
+                                + " <div class='list-item-control material-icons hover_button' id='downbutton-" + listItem.id + "' >keyboard_arrow_down</div>"
+                                + " <div class='list-item-control material-icons hover_button' id='closebutton-" + listItem.id + "' >close</div>"
                                 + "</div>";
             itemsListDiv.innerHTML += listItemElement;
             if(listItem.dueDate == ""){

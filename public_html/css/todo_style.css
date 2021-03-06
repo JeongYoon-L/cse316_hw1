@@ -79,7 +79,7 @@
 #left-sidebar {
     background-color: var(--swatch-complement);
     color: rgb(233,237,240);
-    margin-left: 5px;
+    margin-left: 7px;
 }
 
 #workspace {
@@ -152,7 +152,8 @@ span#add-undo-redo-box {
     cursor:pointer;
     background-color: var(--swatch-complement);
     margin-left: 5%;
-    margin-right: 5%;
+    border-radius: 3px 3px 3px 3px;
+    
 }
 #task-col-header {
     background-color: var(--swatch-primary);
@@ -225,7 +226,7 @@ span#add-undo-redo-box {
     padding-bottom: 10%;
 }
 .todo_button-list:hover {
-    background-color: #7a7b7c3d;
+    background-color: var(--hover-light) !important;
 }
 
 .todo_button:hover {
@@ -233,11 +234,19 @@ span#add-undo-redo-box {
 }
 
 #add-list-button{
-    color : #ffc800;
+    color : var(--swatch-text-accent);
     
 }
 
 
 #modal-overlay {
     background-color: rgba(0,0,0,0.4);
+}
+
+.hover_button{
+    margin-bottom: 2%;
+    border-radius: 5px 5px 5px 5px;
+}
+.hover_button:hover{
+    background-color: var(--hover-light);
 }
