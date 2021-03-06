@@ -296,7 +296,6 @@ export default class ToDoModel {
         this.view.clearItemsList();
         this.view.refreshLists(this.toDoLists);
         
-        
         document.getElementById('add-item-button').disabled = true;
         document.getElementById('add-item-button').style.pointerEvents = "none";
         document.getElementById('add-item-button').style.color = "#322D2D";
@@ -324,17 +323,24 @@ export default class ToDoModel {
         }
     }
 
+    /**
+     * Get information about updated work in Workspace
+     * 
+     * if the information is not changed, I didn't add transaction. 
+     * Transaction only works when the value change.
+     */
     updateWorkspace(){
+
         let list = this.toDoLists[0];
         var self = this;
         for (let i = 0; i < list.items.length; i++) {
+
             document.getElementById("updateDescription-"+ list.items[i].id).addEventListener('blur' , function(){
-                //self.addNewWorkspaceTransaction();
                 if(list.items[i].description != document.getElementById("updateDescription-"+ list.items[i].id).innerHTML &&document.getElementById("updateDescription-"+ list.items[i].id).innerHTML != null){
                     self.addNewWorkspaceTransaction();
                 }
-                
             });
+
             document.getElementById("updateDateDiv-"+ list.items[i].id).onclick = function(){
                 document.getElementById("updateDateDiv-"+ list.items[i].id).style.display = "none";
                 document.getElementById("updateDate-"+ list.items[i].id).style.display = "block";
@@ -342,12 +348,10 @@ export default class ToDoModel {
             }
 
             document.getElementById("updateDate-"+ list.items[i].id).addEventListener('blur' , function(){
-                
                 if(list.items[i].dueDate != document.getElementById("updateDate-"+ list.items[i].id).value &&document.getElementById("updateDate-"+ list.items[i].id).value != null){
                     document.getElementById("updateDateDiv-"+ list.items[i].id).innerHTML = document.getElementById("updateDate-"+ list.items[i].id).value;    
                     self.addNewWorkspaceTransaction();
                 }
-                
                 document.getElementById("updateDate-"+ list.items[i].id).style.display = "none";
                 document.getElementById("updateDateDiv-"+ list.items[i].id).style.display = "block";
             });
@@ -363,7 +367,6 @@ export default class ToDoModel {
                 if(list.items[i].status != document.getElementById("drop-content-"+ list.items[i].id).value &&document.getElementById("drop-content-"+ list.items[i].id).value != null){
                     self.addNewWorkspaceTransaction();
                 }
-                
                 for(let i=0; i< list.items.length; i++){
                     if(list.items[i].status == "complete" && document.getElementById("updateStatus-"+ list.items[i].id) != null){
                         document.getElementById("updateStatus-"+ list.items[i].id).innerHTML = "complete";
@@ -374,10 +377,8 @@ export default class ToDoModel {
                         document.getElementById("updateStatus-"+ list.items[i].id).style.color = '#ffc800';
                     }
                 }
-                
                 document.getElementById("drop-content-"+ list.items[i].id).style.display = "none";
                 document.getElementById("updateStatus-"+ list.items[i].id).style.display = "block";
-                
             });
 
             document.getElementById("upbutton-"+ list.items[i].id).onclick = function(){
@@ -511,6 +512,12 @@ export default class ToDoModel {
         return copy;
     }
 
+    /**
+     * Changing obj type to Array to use for todoLists.
+     * 
+     * @param {*} obj 
+     * @returns Current ID
+     */
     objectToArray(obj){
         let totalid=0;
         for(let i=0; i< this.toDoLists.length;i++){
@@ -537,9 +544,7 @@ export default class ToDoModel {
             loadItem.setStatus(status);
         
             this.toDoLists[totalid].items[i] = loadItem;
-        }
-
-        
+        }        
         return totalid;
     }
 
@@ -578,6 +583,5 @@ export default class ToDoModel {
         document.getElementById('redo-button').style.color = "#322D2D";
 
     }
-         
 
 }

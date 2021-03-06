@@ -132,18 +132,18 @@ export default class ToDoView {
 
     if(list != null && list.items.length != 0){
 
-    for(let m =0; m< list.items.length; m++){
-        document.getElementById("upbutton-"+ list.items[m].id).disabled = false;
-        document.getElementById("upbutton-"+ list.items[m].id).style.color = "#FFFFFF";
-        document.getElementById("upbutton-"+ list.items[m].id).style.pointerEvents = "auto";
-        
-        if(list.items[m].status == "complete"){
-            document.getElementById("updateStatus-"+ list.items[m].id).style.color = '#8ed4f8';
+        for(let m =0; m< list.items.length; m++){
+            document.getElementById("upbutton-"+ list.items[m].id).disabled = false;
+            document.getElementById("upbutton-"+ list.items[m].id).style.color = "#FFFFFF";
+            document.getElementById("upbutton-"+ list.items[m].id).style.pointerEvents = "auto";
+            
+            if(list.items[m].status == "complete"){
+                document.getElementById("updateStatus-"+ list.items[m].id).style.color = '#8ed4f8';
+            }
+            else if(list.items[m].status == "incomplete" ){
+                document.getElementById("updateStatus-"+ list.items[m].id).style.color = '#ffc800';
+            }
         }
-        else if(list.items[m].status == "incomplete" ){
-            document.getElementById("updateStatus-"+ list.items[m].id).style.color = '#ffc800';
-        }
-    }
         let m = list.items[0].id;
         document.getElementById("upbutton-"+ m).disabled = true;
         document.getElementById("upbutton-"+ m).style.color = "black";
@@ -155,7 +155,6 @@ export default class ToDoView {
         document.getElementById("downbutton-"+ n).style.pointerEvents = "none";
 
     }
-
 
     }
 
